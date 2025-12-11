@@ -1,0 +1,64 @@
+body {
+    background-image: url('https://marketplace.canva.com/EAEvHjsXyc8/2/0/1600w/canva-bright-yellow-and-black-photographic-fitness-service-website-d3NUFXkMdr8.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    font-family: Arial, sans-serif;
+    color: #333333;
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2 {
+    color: #ff69b4; /* Hot pink for headings */
+    font-family: 'Helvetica', sans-serif;
+}
+
+a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.header {
+    background-color: #ffffff;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.content {
+    width: 80%;
+    margin: 20px auto;
+    background-color: rgba(255, 255, 255, 0.85);
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.footer {
+    background-color: #ffffff;
+    padding: 10px;
+    text-align: center;
+    font-size: 14px;
+    color: #666666;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+img {
+    display: block;
+    margin: 20px auto;
+    border-radius: 8px;
+}
+
+iframe {
+    display: block;
+    margin: 20px auto;
+}
+
+ol, ul {
+    margin-left: 40px;
+}
