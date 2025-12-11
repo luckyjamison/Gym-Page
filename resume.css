@@ -1,0 +1,228 @@
+/* ----- Reset and Base Styles ----- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', Arial, sans-serif;
+}
+:root {
+  --bg: #f7f4ef; /* warm beige */
+  --text: #2b2b2b;
+  --muted: #6b6b6b;
+  --green: #2f8f6b;
+  --brown: #7a5230;
+  --accent: #bfead4;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+  padding: 40px;
+}
+a {
+  color: #0984e3;
+  text-decoration: none;
+}
+
+/* ----- Resume Container ----- */
+.resume-shell {
+  max-width: 1000px;
+  margin: 0 auto;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 6px 26px rgba(0,0,0,0.12);
+  overflow: hidden;
+}
+
+/* ----- Header ----- */
+.header, header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  background: linear-gradient(135deg, var(--green), var(--brown));
+  color: white;
+  padding: 40px;
+  flex-wrap: wrap;
+}
+.avatar {
+  background-color: rgba(255,255,255,0.12);
+  border-radius: 50%;
+  font-size: 28px;
+  font-weight: 700;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20px;
+}
+.headline {
+  flex: 1;
+  min-width: 250px;
+}
+.headline h1 {
+  font-size: 34px;
+  letter-spacing: 1px;
+}
+.headline h2 {
+  font-size: 18px;
+  font-weight: 400;
+  opacity: 0.95;
+  margin-top: 6px;
+}
+.headline p {
+  margin-top: 12px;
+  font-size: 15px;
+}
+.meta {
+  text-align: right;
+  min-width: 200px;
+  font-size: 14px;
+  opacity: 0.95;
+}
+.meta a { color: #fff; text-decoration: underline; }
+.contact { margin-top: 8px; font-size: 13px; opacity: 0.95; }
+.contact a { color: rgba(255,255,255,0.95); }
+.tiny {
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+/* ----- Layout Grid ----- */
+main {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 30px;
+  padding: 40px;
+}
+
+/* ----- Sections ----- */
+.section-title {
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 13px;
+  letter-spacing: 1.5px;
+  color: var(--brown);
+  border-bottom: 2px solid rgba(122,82,48,0.12);
+  margin-bottom: 12px;
+  padding-bottom: 6px;
+}
+
+/* ----- Job Cards ----- */
+.job-card {
+  background: linear-gradient(180deg, #fff, #fbfbf9);
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  transition: transform 0.18s ease;
+  border-left: 4px solid var(--green);
+}
+.job-card:hover {
+  transform: translateY(-4px);
+}
+.job-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+.job-title {
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--text);
+}
+.job-company {
+  font-size: 14px;
+  color: var(--muted);
+}
+.job-meta {
+  text-align: right;
+  font-size: 13px;
+  color: #636e72;
+}
+ul {
+  margin-left: 20px;
+  font-size: 14px;
+  color: var(--text);
+}
+
+/* ----- Education ----- */
+.edu-item {
+  background: #fff;
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 12px;
+  border-left: 3px solid rgba(122,82,48,0.12);
+}
+.edu-item strong {
+  font-size: 15px;
+  display: block;
+  color: #353b48;
+}
+.edu-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: #718093;
+  margin-top: 6px;
+}
+
+/* ----- Side Section (Skills, Highlights) ----- */
+.pill-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.pill {
+  background-color: var(--green);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.skills-list li {
+  margin-bottom: 6px;
+  font-size: 13px;
+}
+.skill-name {
+  font-weight: 600;
+}
+.side-card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 14px;
+  margin-bottom: 14px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+.badge-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+.badge {
+  background: var(--brown);
+  color: white;
+  font-size: 12px;
+  border-radius: 4px;
+  padding: 3px 8px;
+}
+
+/* ----- Responsive Design ----- */
+@media (max-width: 768px) {
+  main {
+    grid-template-columns: 1fr;
+  }
+  header {
+    flex-direction: column;
+    text-align: center;
+  }
+  .meta {
+    text-align: center;
+    margin-top: 16px;
+  }
+}
