@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fitness Trivia Game</title>
+<style>
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(145deg, #74b9ff, #55efc4);
+    color: #2d3436;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0 20px;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+    margin-top: 20px;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+  }
+
+  .game-container {
+    background: #fff;
+    border-radius: 20px;
+    padding: 30px;
+    margin-top: 30px;
+    max-width: 600px;
+    width: 100%;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    position: relative;
+  }
+
+  #avatar {
+    margin: 20px auto;
+    width: 120px;
+    height: 200px;
+    position: relative;
+    transition: all 0.5s ease;
+  }
+  .head, .body, .arm, .leg {
+    background: #ffeaa7;
+    border-radius: 50%;
+    position: absolute;
+    transition: all 0.5s ease;
+  }
+  .head {
+    width: 60px;
+    height: 60px;
+    top: 0;
+    left: 30px;
+    border: 2px solid #d63031;
+  }
+  .body {
+    width: 60px;
+    height: 80px;
+    top: 60px;
+    left: 30px;
+    border-radius: 40px 40px 30px 30px;
+    background: linear-gradient(180deg, #fab1a0, #e17055);
+  }
+  .arm {
+    width: 30px;
+    height: 60px;
+    top: 70px;
+    background: #ffeaa7;
+    border-radius: 50% 50% 10px 10px;
+  }
+  .arm.left { left: 0; transform: rotate(20deg); }
+  .arm.right { right: 0; transform: rotate(-20deg); }
+  .leg {
+    width: 25px;
+    height: 60px;
+    top: 140px;
+    background: #fab1a0;
+    border-radius: 30%;
+  }
+  .leg.left { left: 25px; }
+  .leg.right { right: 25px; }
+
+  .question {
+    font-size: 1.2rem;
+    margin: 15px 0;
+  }
+
+  .options {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+  .option {
+    background: #0984e3;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+  }
+  .option:hover {
+    background: #74b9ff;
+    transform: translateY(-2px);
+  }
+
+  .feedback {
+    margin-top: 15px;
+    font-weight: bold;
+  }
+
+  .result {
+    font-size: 1.5rem;
+    color: #2d3436;
+    margin-top: 20px;
+  }
+
+  .scoreboard {
+    margin-top: 10px;
+    font-size: 1rem;
+    color: #636e72;
+  }
+
+  @keyframes growMuscle {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+  }
+
+  @keyframes growFat {
+    0% { transform: scale(1); background-color: #ffeaa7;}
+    50% { transform: scale(1.3); background-color: #fab1a0;}
+    100% { transform: scale(1); background-color: #ffeaa7;}
+  }
+
+  .grow-muscle .body, .grow-muscle .arm {
+    animation: growMuscle 0.5s ease;
+  }
+  .grow-fat .body, .grow-fat .arm, .grow-fat .head {
+    animation: growFat 0.6s ease;
+  }
+
+  button.next-btn {
+    margin-top: 20px;
+    background: #00cec9;
+    border: none;
+    color: white;
+    font-size: 1rem;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  button.next-btn:hover {
+    background: #55efc4;
+  }
+</style>
+</head>
+<body>
+  <h1>🏋️ Fitness Trivia Challenge 🥦</h1>
+
+  <div class="game-container">
+    <div id="avatar">
+      <div class="head"></div>
+      <div class="body"></div>
+      <div class="arm left"></div>
+      <div class="arm right"></div>
+      <div class="leg left"></div>
+      <div class="leg right"></div>
+    </div>
+
+    <div class="question-container">
+      <div class="question" id="question">Loading question...</div>
+      <div class="options" id="options"></div>
+      <div class="feedback" id="feedback"></div>
+      <button class="next-btn" id="nextBtn" style="display:none;">Next Question</button>
+      <div class="scoreboard" id="scoreboard"></div>
+    </div>
+  </div>
+
+<script>
+const questions = [
+  {
+    question: "Which macronutrient builds and repairs muscles?",
+    options: ["Carbohydrates", "Fats", "Proteins", "Vitamins"],
+    answer: "Proteins"
+  },
+  {
+    question: "What is the primary energy source during intense exercise?",
+    options: ["Protein", "Fat", "Carbohydrates", "Vitamins"],
+    answer: "Carbohydrates"
+  },
+  {
+    question: "Which of these is a compound exercise?",
+    options: ["Bicep curls", "Squats", "Tricep kickbacks", "Calf raises"],
+    answer: "Squats"
+  },
+  {
+    question: "What’s a healthy body fat range for most adults?",
+    options: ["2%-5%", "10%-25%", "30%-45%", "Above 50%"],
+    answer: "10%-25%"
+  },
+  {
+    question: "How much water should the average adult drink daily?",
+    options: ["1 cup", "1 liter", "2-3 liters", "5 liters"],
+    answer: "2-3 liters"
+  }
+];
+
+let currentQuestion = 0;
+let score = 0;
+let avatarState = {muscle: 1, fat: 1};
+
+const avatar = document.getElementById('avatar');
+const questionEl = document.getElementById('question');
+const optionsEl = document.getElementById('options');
+const feedbackEl = document.getElementById('feedback');
+const nextBtn = document.getElementById('nextBtn');
+const scoreboard = document.getElementById('scoreboard');
+
+function loadQuestion() {
+  const q = questions[currentQuestion];
+  questionEl.textContent = q.question;
+  optionsEl.innerHTML = '';
+  feedbackEl.textContent = '';
+  nextBtn.style.display = 'none';
+  q.options.forEach(opt => {
+    const btn = document.createElement('button');
+    btn.textContent = opt;
+    btn.classList.add('option');
+    btn.onclick = () => handleAnswer(opt);
+    optionsEl.appendChild(btn);
+  });
+  updateScoreboard();
+}
+
+function handleAnswer(selected) {
+  const correct = questions[currentQuestion].answer;
+  const buttons = document.querySelectorAll('.option');
+  buttons.forEach(b => b.disabled = true);
+  if (selected === correct) {
+    feedbackEl.textContent = "✅ Correct! You're getting stronger!";
+    feedbackEl.style.color = "#00b894";
+    avatar.classList.add('grow-muscle');
+    avatarState.muscle += 0.1;
+    avatarState.fat = Math.max(1, avatarState.fat - 0.05);
+    score++;
+  } else {
+    feedbackEl.textContent = "❌ Wrong! You gained some fluff!";
+    feedbackEl.style.color = "#d63031";
+    avatar.classList.add('grow-fat');
+    avatarState.fat += 0.1;
+    avatarState.muscle = Math.max(1, avatarState.muscle - 0.05);
+  }
+  adjustAvatar();
+  setTimeout(() => {
+    avatar.classList.remove('grow-muscle', 'grow-fat');
+  }, 600);
+  nextBtn.style.display = 'block';
+}
+
+function adjustAvatar() {
+  const muscleScale = 1 + (avatarState.muscle - 1) * 0.5;
+  const fatScale = 1 + (avatarState.fat - 1) * 0.5;
+  avatar.style.transform = `scale(${(muscleScale + fatScale) / 2})`;
+}
+
+function nextQuestion() {
+  currentQuestion++;
+  if (currentQuestion < questions.length) {
+    loadQuestion();
+  } else {
+    endGame();
+  }
+}
+
+function updateScoreboard() {
+  scoreboard.textContent = `Score: ${score}/${questions.length}`;
+}
+
+function endGame() {
+  questionEl.textContent = "🎉 Game Over!";
+  optionsEl.innerHTML = "";
+  feedbackEl.textContent = `You finished with a score of ${score}/${questions.length}`;
+  nextBtn.style.display = "none";
+  // fun ending message based on performance
+  if (score >= 4) {
+    avatar.style.transform = "scale(1.4)";
+    feedbackEl.textContent += " 💪 You're an absolute fitness beast!";
+  } else if (score >= 2) {
+    avatar.style.transform = "scale(1.1)";
+    feedbackEl.textContent += " 🏃 Keep training, you're getting there!";
+  } else {
+    avatar.style.transform = "scale(0.9)";
+    feedbackEl.textContent += " 🍩 Uh oh! Time to hit the gym!";
+  }
+}
+
+nextBtn.addEventListener('click', nextQuestion);
+
+loadQuestion();
+</script>
+</body>
+</html>
